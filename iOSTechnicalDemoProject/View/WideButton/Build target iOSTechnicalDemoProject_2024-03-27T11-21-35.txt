@@ -1,0 +1,4 @@
+
+Showing All Messages
+duplicate output file '/Users/adeadegoke/Library/Developer/Xcode/DerivedData/iOSTechnicalDemoProject-dznfldutuswycldvvrzboxtnfnjt/Build/Products/Debug-iphonesimulator/iOSTechnicalDemoProject.app/Info.plist' on task: ProcessInfoPlistFile /Users/adeadegoke/Library/Developer/Xcode/DerivedData/iOSTechnicalDemoProject-dznfldutuswycldvvrzboxtnfnjt/Build/Products/Debug-iphonesimulator/iOSTechnicalDemoProject.app/Info.plist /Users/adeadegoke/Desktop/iOSTechnicalDemoProject/iOSTechnicalDemoProject/Info.plist
+
