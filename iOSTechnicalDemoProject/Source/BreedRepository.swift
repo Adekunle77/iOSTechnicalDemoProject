@@ -52,7 +52,7 @@ class BreedRepository: Repository {
         }
 
         let response = try await breedDataFetcher.fetchSelectedBreed(with: breedID, limit: "10")
-        let addImagesRessponse = try await breedDataFetcher.fetchImagesForSelectedBreed(to: response)
+        let addImagesRessponse = try await breedDataFetcher.fetchSelectedBreedImages(for: response)
         selectedBreedCache.insert(addImagesRessponse, forKey: breedID)
         return addImagesRessponse
 

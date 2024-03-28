@@ -84,10 +84,10 @@ struct SelectedBreedView: View {
             }
         }
         NavigationLink(destination: BreedsView().navigationBarHidden(true), isActive: $isBreedsView) { EmptyView() }
-        .navigationBarHidden(true)
-        .alert(isPresented: $showError) {
-            Alert(title: Text("Error"), message: Text("\(error?.localizedDescription ?? "Unknown error")"), dismissButton: .default(Text("OK")))
-        }
+            .navigationBarHidden(true)
+            .alert(isPresented: $showError) {
+                Alert(title: Text("Error"), message: Text("\(error?.localizedDescription ?? "Unknown error")"), dismissButton: .default(Text("OK")))
+            }
     }
 }
 

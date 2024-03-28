@@ -10,16 +10,16 @@ import SwiftUI
 struct PlaceHolderSelectedBreedItem: View {
     var body: some View {
         ZStack {
-        Rectangle()
-            .fill(Color.clear)
-             .frame(width: UIScreen.main.bounds.width * 0.7, height: UIScreen.main.bounds.width * 0.7, alignment: .center)
-            .padding(.leading, UIScreen.main.bounds.width * 0.05)
-        ProgressView()
-          .scaleEffect(1.5, anchor: .center)
-          .frame(maxWidth: .infinity, maxHeight: .infinity)
-          .progressViewStyle(CircularProgressViewStyle(tint: .black))
-          .padding(.bottom, 20)
-       }
+            Rectangle()
+                .fill(Color.clear)
+                .frame(width: UIScreen.main.bounds.width * 0.7, height: UIScreen.main.bounds.width * 0.7, alignment: .center)
+                .padding(.leading, UIScreen.main.bounds.width * 0.05)
+            ProgressView()
+                .scaleEffect(1.5, anchor: .center)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .progressViewStyle(CircularProgressViewStyle(tint: .black))
+                .padding(.bottom, 20)
+        }
     }
 }
 

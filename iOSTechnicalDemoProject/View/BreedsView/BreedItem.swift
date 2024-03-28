@@ -52,8 +52,6 @@ struct BreedItem: View {
             Button(action: { self.didTapMoreInfo(self.breed) }) {
                 Image(systemName: "chevron.right")
                     .foregroundColor(.black)
-                
-                
             }
         } .onAppear {
             if let imageData = breed.downloadedImageData, let uiImage = UIImage(data: imageData) {

@@ -14,10 +14,10 @@ class SelectedBreedViewModel {
     init(repository: Repository =  DIContainer.shared.resolve(type: Repository.self)) {
         self.repository = repository
     }
-
+    
     func getSelectBreed(with breedID: String) async throws -> [SelectedBreed]  {
         try await repository.getSelectedBreed(with: breedID)
-      
+        
     }
     
 }

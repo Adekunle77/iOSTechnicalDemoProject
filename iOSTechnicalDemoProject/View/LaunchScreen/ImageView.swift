@@ -16,7 +16,7 @@ struct ImageView: View {
         self.backUpImage = backUpImage
         self._isImageVisible = isImageVisible
     }
-
+    
     var body: some View {
         GeometryReader { geometry in
             ZStack {

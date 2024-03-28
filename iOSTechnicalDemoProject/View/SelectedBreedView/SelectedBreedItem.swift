@@ -22,8 +22,6 @@ struct SelectedBreedItem: View {
             .frame(width: UIScreen.main.bounds.width * 0.7, height: UIScreen.main.bounds.width * 0.7, alignment: .center)
             .clipped()
             .padding(.leading, UIScreen.main.bounds.width * 0.05)
-            
-
     }
 }
 

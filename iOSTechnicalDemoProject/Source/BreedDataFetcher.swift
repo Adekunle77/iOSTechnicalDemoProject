@@ -12,7 +12,7 @@ protocol BreedDataFetcherable {
     func fetchBreedsImageURL(with breeds: [Breed]) async -> ([Breed], [Error])
     func fetchImageAndAdd(to breeds: [Breed]) async -> ([Breed], [Error])
     func fetchSelectedBreed(with breedID: String, limit: String) async throws -> [SelectedBreed]
-    func fetchImagesForSelectedBreed(to selectedBreeds: [SelectedBreed]) async throws -> [SelectedBreed]
+    func fetchSelectedBreedImages(for selectedBreeds: [SelectedBreed]) async throws -> [SelectedBreed]
 }
 
 class BreedDataFetcher: BreedDataFetcherable {
@@ -94,7 +94,8 @@ class BreedDataFetcher: BreedDataFetcherable {
         return (breedsArray, errorsArray)
     }
     
-    func fetchImagesForSelectedBreed(to selectedBreeds: [SelectedBreed]) async throws -> [SelectedBreed] {
+    
+    func fetchSelectedBreedImages(for selectedBreeds: [SelectedBreed]) async throws -> [SelectedBreed] {
         var selectedBreedArray = [SelectedBreed]()
         try await withThrowingTaskGroup(of: SelectedBreed.self) { group in
             for selectedBreed in selectedBreeds {

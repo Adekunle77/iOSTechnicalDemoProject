@@ -11,7 +11,7 @@ import Foundation
 class LaunchScreenViewModel: ObservableObject {
     var api: Networkable
     @Published var imageURL = ""
-
+    
     init(api: Networkable = DIContainer.shared.resolve(type: Networkable.self)) {
         self.api = api
     }

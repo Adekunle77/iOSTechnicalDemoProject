@@ -65,9 +65,7 @@ struct BreedsView: View {
                     let (name, temperament) = try await breedInfo
                     randomBreedName = name
                     breedTemperament = temperament
-                    breeds = try await viewModel.breedRepository.getBreedsWithImages().sorted { $0.name < $1.name }
-
-                 
+                    breeds = try await viewModel.breedRepository.getBreedsWithImages().sorted { $0.name < $1.name }                 
                     isLoading = false
                 } catch {
                     self.error = error

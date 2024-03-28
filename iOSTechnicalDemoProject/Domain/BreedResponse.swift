@@ -81,7 +81,6 @@ extension Breed {
         if let referenceImageID = referenceImageID {
             return AppConstants.imageIDURL + "\(referenceImageID)"
         }
-
         return nil
     }
 }

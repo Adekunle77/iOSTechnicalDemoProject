@@ -24,7 +24,6 @@ extension BreedsEndpoint: Endpoint {
         case .randomImage:
             return AppConstants.selectedBreeds
         }
-        
     }
     
     var queryItems: [URLQueryItem] {

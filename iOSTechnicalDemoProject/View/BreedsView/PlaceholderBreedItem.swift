@@ -39,7 +39,6 @@ struct PlaceholderBreedItem: View {
     }
 }
 
-
 struct PlaceholderBreedItem_Previews: PreviewProvider {
     static var previews: some View {
         ForEach(["iPhone 13 Pro","iPhone 6s"], id: \.self) { deviceName in
