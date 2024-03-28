@@ -14,9 +14,28 @@ class BreedsViewModel {
         self.breedRepository = repository
     }
 
-    func fetchBreeCollection() async throws -> [Breed] {
+    func getBreedsWithImages() async throws -> [Breed] {
         let breeds = try await breedRepository.getBreedsWithImages()
-        return breeds.sorted { $0.name < $1.name }
-       
+        return breeds     
+    }
+
+    func getRandomBreedInfo() async throws -> (String, String) {
+        let breeds = try await breedRepository.getBreedsData()
+        if let randomBreed = breeds.randomElement() {
+            let breedName = randomBreed.name
+            let breedInfo = addAndBeforeLastWord(in: randomBreed.temperament)
+            return (breedName, breedInfo)
+        }
+        
+        throw NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey : "No breed found"])
+    }
+
+    private func addAndBeforeLastWord(in string: String) -> String {
+        var words = string.components(separatedBy: ", ")
+        if let last = words.last, words.count > 1 {
+            words.removeLast()
+            words.append("and \(last)")
+        }
+        return words.joined(separator: ", ")
     }
 }

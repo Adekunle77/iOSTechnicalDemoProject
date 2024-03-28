@@ -39,13 +39,13 @@ struct PlaceholderBreedItem: View {
     }
 }
 
-//
-//struct PlaceholderBreedItem_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ForEach(["iPhone 13 Pro","iPhone 6s"], id: \.self) { deviceName in
-//            PlaceholderBreedItem()
-//                .previewDevice(PreviewDevice(rawValue: deviceName))
-//                .previewDisplayName(deviceName)
-//        }
-//    }
-//}
+
+struct PlaceholderBreedItem_Previews: PreviewProvider {
+    static var previews: some View {
+        ForEach(["iPhone 13 Pro","iPhone 6s"], id: \.self) { deviceName in
+            PlaceholderBreedItem()
+                .previewDevice(PreviewDevice(rawValue: deviceName))
+                .previewDisplayName(deviceName)
+        }
+    }
+}

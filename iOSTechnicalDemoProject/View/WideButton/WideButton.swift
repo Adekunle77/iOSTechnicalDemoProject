@@ -22,7 +22,6 @@ struct WideButton: View {
         self.title = title
         self.borderSytle = borderSytle
         self.action = action
-        
     }
     
     var body: some View {
@@ -38,14 +37,14 @@ struct WideButton: View {
     }
 }
 
-//struct WideButton_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ForEach(["iPhone 13 Pro","iPhone 6s"], id: \.self) { deviceName in
-//            WideButton(backgroundColor: .clear, title: "Wide Button", borderSytle: BorderSytle(Color.black, width: 2.0)) {
-//                print("Did tap Wide Button")
-//            }
-//            .previewDevice(PreviewDevice(rawValue: deviceName))
-//            .previewDisplayName(deviceName)
-//        }
-//    }
-//}
+struct WideButton_Previews: PreviewProvider {
+    static var previews: some View {
+        ForEach(["iPhone 13 Pro","iPhone 6s"], id: \.self) { deviceName in
+            WideButton(backgroundColor: .clear, title: "Wide Button", borderSytle: BorderSytle(Color.black, width: 2.0)) {
+                print("Did tap Wide Button")
+            }
+            .previewDevice(PreviewDevice(rawValue: deviceName))
+            .previewDisplayName(deviceName)
+        }
+    }
+}

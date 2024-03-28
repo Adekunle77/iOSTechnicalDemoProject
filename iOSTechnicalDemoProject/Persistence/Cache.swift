@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 final class Cache<Key: Hashable & Sendable, Value: Sendable> {
     private let wrapped = NSCache<WrappedKey, Entry>()
     private let lock = NSLock()
@@ -66,8 +65,6 @@ extension Cache {
         get { return value(forKey: key) }
         set {
             guard let value = newValue else {
-                // If nil was assigned using our subscript,
-                // then we remove any value for that key:
                 removeValue(forKey: key)
                 return
             }

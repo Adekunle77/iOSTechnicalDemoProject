@@ -13,10 +13,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         
         let container = DIContainer.shared
         let api = NetworkManager()
-        let repository = BreedRepository(api: api)
-        
+        let breedDataFetcher = BreedDataFetcher(api: api)
+        let repository = BreedRepository(dataFetcher: breedDataFetcher)
+    
         container.register(type: Networkable.self, component: api)
         container.register(type: Repository.self, component: repository)
+        container.register(type: BreedDataFetcherable.self, component: breedDataFetcher)
+        
     
         return true
     }

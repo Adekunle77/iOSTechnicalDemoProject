@@ -24,6 +24,7 @@ class NetworkManager {
 
 extension NetworkManager: Networkable {
     func fetchData<T>(endpoint: Endpoint) async throws -> T where T : Decodable {
+
         let (data, _) = try await session.data(from: endpoint.url)
         do {
             let decodedData = try decoder.decode(T.self, from: data)

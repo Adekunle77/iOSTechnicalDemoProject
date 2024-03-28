@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SelectedBreedItem: View {
     
-    var breedImage: Image
+    let breedImage: Image
     
     init(breedImage: Image) {
         self.breedImage = breedImage
@@ -27,12 +27,12 @@ struct SelectedBreedItem: View {
     }
 }
 
-//struct SelectedBreedItem_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ForEach(["iPhone 13 Pro","iPhone 6s"], id: \.self) { deviceName in
-//            SelectedBreedItem(breedImage: Image("catOnTree"))
-//                .previewDevice(PreviewDevice(rawValue: deviceName))
-//                .previewDisplayName(deviceName)
-//        }
-//    }
-//}
+struct SelectedBreedItem_Previews: PreviewProvider {
+    static var previews: some View {
+        ForEach(["iPhone 13 Pro","iPhone 6s"], id: \.self) { deviceName in
+            SelectedBreedItem(breedImage: Image("catOnTree"))
+                .previewDevice(PreviewDevice(rawValue: deviceName))
+                .previewDisplayName(deviceName)
+        }
+    }
+}

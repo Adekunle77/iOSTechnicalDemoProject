@@ -51,6 +51,7 @@ struct BreedItem: View {
             .fixedSize()
             Button(action: { self.didTapMoreInfo(self.breed) }) {
                 Image(systemName: "chevron.right")
+                    .foregroundColor(.black)
                 
                 
             }
@@ -62,17 +63,17 @@ struct BreedItem: View {
     }
 }
 
-//struct BreedItem_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ForEach(["iPhone 13 Pro","iPhone 6s"], id: \.self) { deviceName in
-//            BreedItem(breed: dummyBreed(), didTapMoreInfo: {_ in
-//                print("Did tap more info button")
-//            })
-//            .previewDevice(PreviewDevice(rawValue: deviceName))
-//            .previewDisplayName(deviceName)
-//        }
-//    }
-//}
+struct BreedItem_Previews: PreviewProvider {
+    static var previews: some View {
+        ForEach(["iPhone 13 Pro","iPhone 6s"], id: \.self) { deviceName in
+            BreedItem(breed: dummyBreed(), didTapMoreInfo: {_ in
+                print("Did tap more info button")
+            })
+            .previewDevice(PreviewDevice(rawValue: deviceName))
+            .previewDisplayName(deviceName)
+        }
+    }
+}
 
 
 func dummyBreed() -> Breed {

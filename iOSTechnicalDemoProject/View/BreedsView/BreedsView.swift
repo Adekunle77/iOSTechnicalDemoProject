@@ -16,22 +16,31 @@ struct BreedsView: View {
     @State private var selectedBreedItem: Breed?
     @State private var isSelectedBreedView = false
     @State private var isLaunchScreen = false
+    @State private var randomBreedName = ""
+    @State private var breedTemperament = ""
     
     var body: some View {
         Spacer()
         VStack {
-            Text("Select a cat")
-                .font(.system(size: 35, weight: .regular, design: .default))
-                .padding(.top, 50)
             if isLoading {
-                List {
-                    ForEach(0..<10) { _ in
-                        PlaceholderBreedItem()
-                    }
+                VStack {
+                    Text("Did you know that \(randomBreedName) breed\n are\n\(breedTemperament)")
+                        .font(.system(size: 20, weight: .regular, design: .default))
+                        .padding(.horizontal, 12)
+                        .multilineTextAlignment(.center)
+                        .lineSpacing(10)
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: .black))
+                        .frame(width: 100, height: 100)
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.gray.opacity(0.1))
                 
             } else {
-                
+                Text("Select a cat")
+                    .font(.system(size: 35, weight: .regular, design: .default))
+                    .padding(.top, 50)
+
                 List {
                     ForEach(breeds.indices, id: \.self) { index in
                         let breed = breeds[index]
@@ -52,7 +61,13 @@ struct BreedsView: View {
         NavigationLink(destination: LaunchScreen().navigationBarHidden(true), isActive: $isLaunchScreen) { EmptyView() }
             .task {
                 do {
-                    breeds = try await viewModel.fetchBreeCollection()
+                    async let breedInfo = viewModel.getRandomBreedInfo()
+                    let (name, temperament) = try await breedInfo
+                    randomBreedName = name
+                    breedTemperament = temperament
+                    breeds = try await viewModel.breedRepository.getBreedsWithImages().sorted { $0.name < $1.name }
+
+                 
                     isLoading = false
                 } catch {
                     self.error = error
@@ -69,14 +84,13 @@ struct BreedsView: View {
 }
 
 
-//struct SelectBreedView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ForEach(["iPhone 13 Pro","iPhone 6s"], id: \.self) { deviceName in
-//            BreedsView()
-//                .previewDevice(PreviewDevice(rawValue: deviceName))
-//                .previewDisplayName(deviceName)
-//        }
-//    }
-//}
-
+struct SelectBreedView_Previews: PreviewProvider {
+    static var previews: some View {
+        ForEach(["iPhone 13 Pro","iPhone 6s"], id: \.self) { deviceName in
+            BreedsView()
+                .previewDevice(PreviewDevice(rawValue: deviceName))
+                .previewDisplayName(deviceName)
+        }
+    }
+}
 

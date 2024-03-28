@@ -23,12 +23,12 @@ struct PlaceHolderSelectedBreedItem: View {
     }
 }
 
-//struct PlaceHolderSelectedBreedItem_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ForEach(["iPhone 13 Pro","iPhone 6s"], id: \.self) { deviceName in
-//            PlaceHolderSelectedBreedItem()
-//                .previewDevice(PreviewDevice(rawValue: deviceName))
-//                .previewDisplayName(deviceName)
-//        }
-//    }
-//}
+struct PlaceHolderSelectedBreedItem_Previews: PreviewProvider {
+    static var previews: some View {
+        ForEach(["iPhone 13 Pro","iPhone 6s"], id: \.self) { deviceName in
+            PlaceHolderSelectedBreedItem()
+                .previewDevice(PreviewDevice(rawValue: deviceName))
+                .previewDisplayName(deviceName)
+        }
+    }
+}

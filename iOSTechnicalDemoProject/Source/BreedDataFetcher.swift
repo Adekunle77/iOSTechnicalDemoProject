@@ -8,13 +8,16 @@
 import Foundation
 
 protocol BreedDataFetcherable {
-    func fetchBreeds() async throws -> [Breed]
+    func fetchBreedsData() async throws -> [Breed]
+    func fetchBreedsImageURL(with breeds: [Breed]) async -> ([Breed], [Error])
+    func fetchImageAndAdd(to breeds: [Breed]) async -> ([Breed], [Error])
+    func fetchSelectedBreed(with breedID: String, limit: String) async throws -> [SelectedBreed]
+    func fetchImagesForSelectedBreed(to selectedBreeds: [SelectedBreed]) async throws -> [SelectedBreed]
 }
 
 class BreedDataFetcher: BreedDataFetcherable {
-
     
-    private var api: Networkable
+    private let api: Networkable
     private var downloadTasks: [URL: Task<Data, Error>] = [:]
     private var fetchTasks: [String: Task<String, Error>] = [:]
     
@@ -22,22 +25,19 @@ class BreedDataFetcher: BreedDataFetcherable {
         self.api = api
     }
     
-    
-    func fetchBreeds() async throws -> [Breed] {
+    func fetchBreedsData() async throws -> [Breed] {
         let breeds: AllBreedsAPIResponse = try await api.fetchData(endpoint: BreedsEndpoint.allBreeds)
         return breeds
     }
     
-    
-    
-    private func getBreedsImageURL(with breeds: [Breed]) async -> ([Breed], [Error]) {
+    func fetchBreedsImageURL(with breeds: [Breed]) async -> ([Breed], [Error]) {
         var breedsArray = [Breed]()
         var errorsArray = [Error]()
         await withTaskGroup(of: (Breed, Error?).self) { group in
             for breed in breeds {
                 group.addTask {
                     var breedCopy = breed
-
+                    
                     guard let url = breedCopy.url else {
                         return (breedCopy, nil)
                     }
@@ -51,63 +51,7 @@ class BreedDataFetcher: BreedDataFetcherable {
                     }
                 }
             }
-
-            for await (breed, error) in group {
-                breedsArray.append(breed)
-                if let error = error {
-                    errorsArray.append(error)
-                }
-            }
-        }
-        return (breedsArray, errorsArray)
-    }
-
-    private func getImageURL(with url: String) async throws -> String {
-
-        if let existingTask = fetchTasks[url] {
-            return try await existingTask.value
-        } else {
-            let fetchTask = Task { [weak self] () -> String in
-                guard let self = self else { throw EndpointError.apiInstanceDeallocated }
-                let imageUrl: SelectedBreed = try await self.api.fetchData(endpoint: BreedsEndpoint.imageURL(url: url))
-                return imageUrl.url
-            }
-
-            fetchTasks[url] = fetchTask
             
-            do {
-                let imageUrl = try await fetchTask.value
-                fetchTasks[url] = nil
-                return imageUrl
-            } catch {
-                fetchTasks[url] = nil
-                throw error
-            }
-        }
-    }
-
-    private func addImage(to breeds: [Breed]) async -> ([Breed], [Error]) {
-        var breedsArray = [Breed]()
-        var errorsArray = [Error]()
-        await withTaskGroup(of: (Breed, Error?).self) { group in
-            for breed in breeds {
-                group.addTask {
-                    var breedCopy = breed
-                    
-                    guard let url = breedCopy.imageURL else {
-                        return (breedCopy, nil)
-                    }
-
-                    do {
-                        breedCopy.downloadedImageData = try await self.downloadImage(with: url)
-                        return (breedCopy, nil)
-                    } catch {
-                        print("Error while downloading \(url)", error)
-                        return (breedCopy, error)
-                    }
-                }
-            }
-
             for await (breed, error) in group {
                 breedsArray.append(breed)
                 if let error = error {
@@ -118,34 +62,39 @@ class BreedDataFetcher: BreedDataFetcherable {
         return (breedsArray, errorsArray)
     }
     
-    private func downloadImage(with imageUrl: String) async throws -> Data {
-        guard let url = URL(string: imageUrl) else {
-            throw EndpointError.invalidURL
-        }
-
-        if let existingTask = downloadTasks[url] {
-            return try await existingTask.value
-        } else {
-            let downloadTask = Task { [weak self] () -> Data in
-                guard let self = self else { throw EndpointError.apiInstanceDeallocated }
-                let data: Data = try await self.api.downloadData(from: url)
-                return data
+    func fetchImageAndAdd(to breeds: [Breed]) async -> ([Breed], [Error]) {
+        var breedsArray = [Breed]()
+        var errorsArray = [Error]()
+        await withTaskGroup(of: (Breed, Error?).self) { group in
+            for breed in breeds {
+                group.addTask {
+                    var breedCopy = breed
+                    
+                    guard let url = breedCopy.imageURL else {
+                        return (breedCopy, nil)
+                    }
+                    
+                    do {
+                        breedCopy.downloadedImageData = try await self.downloadImage(with: url)
+                        return (breedCopy, nil)
+                    } catch {
+                        print("Error while downloading \(url)", error)
+                        return (breedCopy, error)
+                    }
+                }
             }
-
-            downloadTasks[url] = downloadTask
-
-            do {
-                let data = try await downloadTask.value
-                downloadTasks[url] = nil
-                return data
-            } catch {
-                downloadTasks[url] = nil
-                throw error
+            
+            for await (breed, error) in group {
+                breedsArray.append(breed)
+                if let error = error {
+                    errorsArray.append(error)
+                }
             }
         }
+        return (breedsArray, errorsArray)
     }
-
-    private func addImagesSelectedBreed(to selectedBreeds: [SelectedBreed]) async throws -> [SelectedBreed] {
+    
+    func fetchImagesForSelectedBreed(to selectedBreeds: [SelectedBreed]) async throws -> [SelectedBreed] {
         var selectedBreedArray = [SelectedBreed]()
         try await withThrowingTaskGroup(of: SelectedBreed.self) { group in
             for selectedBreed in selectedBreeds {
@@ -161,10 +110,60 @@ class BreedDataFetcher: BreedDataFetcherable {
         }
         return selectedBreedArray
     }
-   
-    private func fetchSelectedBreed(with breedID: String, limit: String) async throws -> [SelectedBreed]  {
+    
+    func fetchSelectedBreed(with breedID: String, limit: String) async throws -> [SelectedBreed]  {
         let selected: APISelectedBreedResponse = try await api.fetchData(endpoint: BreedsEndpoint.selectedBreed(limit: limit, breedIds: breedID))
         return selected
     }
     
+    private func downloadImage(with imageUrl: String) async throws -> Data {
+        guard let url = URL(string: imageUrl) else {
+            throw EndpointError.invalidURL
+        }
+        
+        if let existingTask = downloadTasks[url] {
+            return try await existingTask.value
+        } else {
+            let downloadTask = Task { [weak self] () -> Data in
+                guard let self = self else { throw EndpointError.apiInstanceDeallocated }
+                let data: Data = try await self.api.downloadData(from: url)
+                return data
+            }
+            
+            downloadTasks[url] = downloadTask
+            
+            do {
+                let data = try await downloadTask.value
+                downloadTasks[url] = nil
+                return data
+            } catch {
+                downloadTasks[url] = nil
+                throw error
+            }
+        }
+    }
+    
+    private func getImageURL(with url: String) async throws -> String {
+        
+        if let existingTask = fetchTasks[url] {
+            return try await existingTask.value
+        } else {
+            let fetchTask = Task { [weak self] () -> String in
+                guard let self = self else { throw EndpointError.apiInstanceDeallocated }
+                let imageUrl: SelectedBreed = try await self.api.fetchData(endpoint: BreedsEndpoint.imageURL(url: url))
+                return imageUrl.url
+            }
+            
+            fetchTasks[url] = fetchTask
+            
+            do {
+                let imageUrl = try await fetchTask.value
+                fetchTasks[url] = nil
+                return imageUrl
+            } catch {
+                fetchTasks[url] = nil
+                throw error
+            }
+        }
+    }
 }

@@ -23,9 +23,6 @@ struct SelectedBreedView: View {
     
     var body: some View {
         VStack {
-//            Button("Back") {
-//                isBreedsView.toggle()
-//            }
             if isLoading {
                 Text("Loading...")
                     .font(.system(size: 25, weight: .regular, design: .default))
@@ -94,12 +91,12 @@ struct SelectedBreedView: View {
     }
 }
 
-//struct SelectedBreedView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ForEach(["iPhone 13 Pro","iPhone 6s"], id: \.self) { deviceName in
-//            SelectedBreedView(breed: dummyBreed())
-//                .previewDevice(PreviewDevice(rawValue: deviceName))
-//                .previewDisplayName(deviceName)
-//        }
-//    }
-//}
+struct SelectedBreedView_Previews: PreviewProvider {
+    static var previews: some View {
+        ForEach(["iPhone 13 Pro","iPhone 6s"], id: \.self) { deviceName in
+            SelectedBreedView(breed: dummyBreed())
+                .previewDevice(PreviewDevice(rawValue: deviceName))
+                .previewDisplayName(deviceName)
+        }
+    }
+}

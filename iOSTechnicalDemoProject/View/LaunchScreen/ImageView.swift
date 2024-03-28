@@ -28,7 +28,6 @@ struct ImageView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: geometry.size.width, height: geometry.size.height)
-                                //.cornerRadius(15)
                                 .clipped()
                                 .opacity(isImageVisible ? 1 : 0)
                                 .onAppear {
@@ -62,12 +61,12 @@ struct ImageView: View {
     }
 }
 
-//struct ImageView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ForEach(["iPhone 13 Pro","iPhone 6s"], id: \.self) { deviceName in
-//            ImageView(imageURL: "www.catImage.com", backUpImage: "catOnTree", isImageVisible: .constant(true))
-//                .previewDevice(PreviewDevice(rawValue: deviceName))
-//                .previewDisplayName(deviceName)
-//        }
-//    }
-//}
+struct ImageView_Previews: PreviewProvider {
+    static var previews: some View {
+        ForEach(["iPhone 13 Pro","iPhone 6s"], id: \.self) { deviceName in
+            ImageView(imageURL: "www.catImage.com", backUpImage: "catOnTree", isImageVisible: .constant(true))
+                .previewDevice(PreviewDevice(rawValue: deviceName))
+                .previewDisplayName(deviceName)
+        }
+    }
+}

@@ -32,6 +32,7 @@
 		3390CE842BAEFA6B00F35FEE /* BreedRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3390CE832BAEFA6B00F35FEE /* BreedRepository.swift */; };
 		339ADE0C2BB1D56E003647B9 /* Networkable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339ADE0B2BB1D56E003647B9 /* Networkable.swift */; };
 		339ADE102BB1DC6D003647B9 /* BreedsEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339ADE0F2BB1DC6D003647B9 /* BreedsEndpoint.swift */; };
+		33FA3A4F2BB57E280010C3E5 /* BreedDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FA3A4E2BB57E280010C3E5 /* BreedDataFetcher.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,7 @@
 		3390CE832BAEFA6B00F35FEE /* BreedRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreedRepository.swift; sourceTree = "<group>"; };
 		339ADE0B2BB1D56E003647B9 /* Networkable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networkable.swift; sourceTree = "<group>"; };
 		339ADE0F2BB1DC6D003647B9 /* BreedsEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreedsEndpoint.swift; sourceTree = "<group>"; };
+		33FA3A4E2BB57E280010C3E5 /* BreedDataFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BreedDataFetcher.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +184,7 @@
 				332012AA2BAB4A0300C26479 /* DIContainer.swift */,
 				3320129F2BAB28D600C26479 /* AppConstants.swift */,
 				3390CE832BAEFA6B00F35FEE /* BreedRepository.swift */,
+				33FA3A4E2BB57E280010C3E5 /* BreedDataFetcher.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -379,6 +382,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33FA3A4F2BB57E280010C3E5 /* BreedDataFetcher.swift in Sources */,
 				332012AE2BAB4AAC00C26479 /* AppDelegate.swift in Sources */,
 				332012B82BAC9B8400C26479 /* LaunchScreen.swift in Sources */,
 				338E097F2BB3373A00D15AFF /* PlaceholderBreedItem.swift in Sources */,
